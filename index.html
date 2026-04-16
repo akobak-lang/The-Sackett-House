@@ -711,7 +711,7 @@
         <div class="fact"><span class="fact-k">WiFi</span><span class="fact-v">Gigabit Fios Fiber</span></div>
         <div class="fact"><span class="fact-k">Climate</span><span class="fact-v">Dual-Zone HVAC</span></div>
         <div class="fact"><span class="fact-k">Subway</span><span class="fact-v">R at 4th Ave (~5 min)<br><span style="font-weight:400;color:var(--muted)">All lines at Atlantic (~15 min)</span></span></div>
-        <div class="fact"><span class="fact-k">Contact</span><span class="fact-v"><a href="mailto:708sackett@gmail.com" class="contact-btn">Send a Message</a></span></div>
+        <div class="fact"><span class="fact-k">Contact</span><span class="fact-v"><a href="#inquiry" class="contact-btn">Send a Message</a></span></div>
       </div>
     </div>
   </div>
@@ -892,6 +892,11 @@
       <div class="rule" style="margin:0 auto 28px"></div>
       <p>Send us your details and we'll confirm availability and next steps within 24 hours. All stays subject to a 31-night minimum.</p>
 
+      <div id="form-success" style="display:none;text-align:center;padding:40px 0">
+        <div style="font-size:36px;margin-bottom:16px">✓</div>
+        <h3 style="font-family:'Playfair Display',serif;font-size:24px;font-weight:400;margin-bottom:12px">Message sent!</h3>
+        <p style="color:var(--muted)">We'll be in touch within 24 hours.</p>
+      </div>
       <form class="form-grid" id="inquiry-form">
         <div class="fg">
           <label>First Name</label>
@@ -956,7 +961,7 @@
   <div class="footer-title">The Sackett House</div>
   <p>708A Sackett Street · Park Slope, Brooklyn, NY</p>
   <div class="footer-divider"></div>
-  <p><a href="mailto:708sackett@gmail.com" class="contact-btn" style="display:inline-block;margin-top:4px">Send a Message</a></p>
+  <p><a href="#inquiry" class="contact-btn" style="display:inline-block;margin-top:4px">Send a Message</a></p>
   <p style="margin-top:20px;font-size:11px;opacity:.4">&copy; 2025 The Sackett House. All rights reserved.</p>
 </footer>
 
@@ -1173,32 +1178,29 @@ document.querySelectorAll('.gi:not(.gi-fp)').forEach(el => {
 });
 
 /* ─── INQUIRY FORM ───────────────────────────────── */
-document.getElementById('inquiry-form').addEventListener('submit', function(e) {
+document.getElementById('inquiry-form').addEventListener('submit', async function(e) {
   e.preventDefault();
-  const fd  = new FormData(this);
-  const get = k => fd.get(k) || '';
-  const subj = encodeURIComponent(
-    `Booking Inquiry — ${get('firstName')} ${get('lastName')} · ${get('checkin')} to ${get('checkout')}`
-  );
-  const body = encodeURIComponent(
-`Hi,
+  const btn = this.querySelector('.submit-btn');
+  btn.textContent = 'Sending…';
+  btn.disabled = true;
 
-I'd like to inquire about booking The Sackett House.
-
-Name:      ${get('firstName')} ${get('lastName')}
-Email:     ${get('email')}
-Phone:     ${get('phone') || 'Not provided'}
-Check-in:  ${get('checkin')}
-Check-out: ${get('checkout')}
-Guests:    ${get('guests')}
-Source:    ${get('source') || 'Not specified'}
-
-Message:
-${get('message') || 'No additional message.'}
-
-Thank you!`
-  );
-  window.open(`mailto:708sackett@gmail.com?subject=${subj}&body=${body}`, '_self');
+  try {
+    const resp = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
+      method: 'POST',
+      body: new FormData(this),
+      headers: { 'Accept': 'application/json' }
+    });
+    if (resp.ok) {
+      this.style.display = 'none';
+      document.getElementById('form-success').style.display = 'block';
+    } else {
+      throw new Error();
+    }
+  } catch {
+    btn.textContent = 'Something went wrong — please try again';
+    btn.style.background = '#c0392b';
+    btn.disabled = false;
+  }
 });
 </script>
 
