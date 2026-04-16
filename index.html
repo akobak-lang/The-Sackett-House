@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Sackett House — Park Slope, Brooklyn</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #1C2B3A;
+      --gold:   #C9A96E;
+      --bg:     #F9F8F5;
+      --white:  #FFFFFF;
+      --text:   #1A1A1A;
+      --muted:  #686868;
+      --border: #E3DDD5;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      font-size: 16px;
+    }
+
+    /* ─── NAV ─────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 22px 52px;
+      transition: background .3s, box-shadow .3s;
+    }
+    nav.scrolled {
+      background: rgba(249,248,245,.95);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 1px 0 var(--border);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 19px; letter-spacing: .02em;
+      color: #fff; text-decoration: none;
+      transition: color .3s;
+    }
+    nav.scrolled .nav-logo { color: var(--navy); }
+    .nav-cta {
+      background: var(--navy); color: #fff;
+      border: none; padding: 10px 26px;
+      font-family: 'Inter', sans-serif; font-size: 12px;
+      font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+      cursor: pointer; border-radius: 2px; text-decoration: none;
+      transition: background .2s;
+    }
+    .nav-cta:hover { background: var(--gold); }
+
+    /* ─── HERO ────────────────────────────────────── */
+    .hero {
+      height: 100vh; min-height: 640px;
+      position: relative; overflow: hidden;
+    }
+    .hero img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center 60%;
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(160deg, rgba(0,0,0,.18) 0%, rgba(0,0,0,.55) 100%);
+    }
+    .hero-content {
+      position: absolute; bottom: 80px; left: 52px; right: 52px;
+      color: #fff;
+    }
+    .hero-eyebrow {
+      font-size: 11px; font-weight: 600; letter-spacing: .2em;
+      text-transform: uppercase; opacity: .75; margin-bottom: 14px;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(46px, 6.5vw, 80px);
+      font-weight: 400; line-height: 1.05; margin-bottom: 28px;
+    }
+    .hero-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+    .chip {
+      background: rgba(255,255,255,.13);
+      border: 1px solid rgba(255,255,255,.32);
+      backdrop-filter: blur(8px);
+      padding: 6px 18px; border-radius: 100px;
+      font-size: 13px; letter-spacing: .03em;
+    }
+
+    /* ─── STATS BAR ───────────────────────────────── */
+    .stats-bar {
+      background: var(--navy); color: #fff;
+      display: flex; align-items: stretch;
+      padding: 0 52px;
+    }
+    .stat {
+      display: flex; align-items: center; gap: 14px;
+      padding: 26px 28px 26px 0;
+      border-right: 1px solid rgba(255,255,255,.1);
+      margin-right: 28px; flex-shrink: 0;
+    }
+    .stat:last-child { border-right: none; margin-right: 0; }
+    .stat-icon { font-size: 20px; opacity: .8; }
+    .stat-val { font-size: 15px; font-weight: 600; line-height: 1.1; }
+    .stat-key { font-size: 11px; color: rgba(255,255,255,.5); letter-spacing: .06em; margin-top: 2px; }
+
+    /* ─── GALLERY ─────────────────────────────────── */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-template-rows: 320px 260px 260px;
+      gap: 4px;
+    }
+    .gi { overflow: hidden; cursor: pointer; position: relative; }
+    .gi img { width: 100%; height: 100%; object-fit: cover; transition: transform .45s ease; display: block; }
+    .gi:hover img { transform: scale(1.06); }
+
+    .gi-1  { grid-column: 1 / 9;  grid-row: 1 / 3; }
+    .gi-2  { grid-column: 9 / 13; grid-row: 1 / 2; }
+    .gi-3  { grid-column: 9 / 13; grid-row: 2 / 3; }
+    .gi-4  { grid-column: 1 / 5;  grid-row: 3 / 4; }
+    .gi-5  { grid-column: 5 / 9;  grid-row: 3 / 4; }
+    .gi-6  { grid-column: 9 / 11; grid-row: 3 / 4; }
+    .gi-7  { grid-column: 11 / 13; grid-row: 3 / 4; position: relative; }
+
+    .gi-more-overlay {
+      position: absolute; inset: 0;
+      background: rgba(28,43,58,.72);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      color: #fff; gap: 4px;
+      pointer-events: none;
+    }
+    .gi-more-overlay span:first-child { font-size: 26px; font-weight: 300; }
+    .gi-more-overlay span:last-child  { font-size: 12px; letter-spacing: .08em; opacity: .8; }
+    .gi-fp { cursor: pointer; background: #e8e3da; }
+    .gi-fp embed { width: 100%; height: 100%; display: block; pointer-events: none; }
+    .gi-fp-label {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(28,43,58,.75) 0%, transparent 55%);
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 14px 16px; color: #fff; pointer-events: none; gap: 2px;
+    }
+    .gi-fp-label span:first-child { font-size: 18px; }
+    .gi-fp-label span:last-child  { font-size: 12px; font-weight: 500; letter-spacing: .08em; }
+
+    /* ─── SECTION COMMONS ─────────────────────────── */
+    .section { padding: 88px 52px; }
+    .inner   { max-width: 1240px; margin: 0 auto; }
+    .section-label {
+      font-size: 11px; font-weight: 600; letter-spacing: .2em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 10px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 3vw, 42px);
+      font-weight: 400; line-height: 1.15; margin-bottom: 20px;
+    }
+    .rule {
+      width: 44px; height: 2px;
+      background: var(--gold); margin-bottom: 36px;
+    }
+
+    /* ─── OVERVIEW ────────────────────────────────── */
+    .overview-grid {
+      display: grid; grid-template-columns: 1fr 380px; gap: 80px; align-items: start;
+    }
+    .overview-text p {
+      color: var(--muted); font-size: 17px; line-height: 1.85; margin-bottom: 22px;
+    }
+    .overview-text p:last-child { margin-bottom: 0; }
+    .overview-text strong { color: var(--text); font-weight: 500; }
+
+    .facts-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 3px; padding: 36px;
+      position: sticky; top: 100px;
+    }
+    .facts-card h3 {
+      font-family: 'Playfair Display', serif; font-size: 20px;
+      font-weight: 400; margin-bottom: 24px; color: var(--navy);
+    }
+    .fact {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 11px 0; border-bottom: 1px solid var(--border);
+      font-size: 14px;
+    }
+    .fact:last-child { border-bottom: none; }
+    .fact-k { color: var(--muted); }
+    .fact-v { font-weight: 500; text-align: right; }
+    .contact-btn {
+      display: inline-block; background: var(--navy); color: #fff;
+      padding: 7px 16px; border-radius: 2px; text-decoration: none;
+      font-size: 12px; font-weight: 600; letter-spacing: .07em;
+      text-transform: uppercase; transition: background .2s;
+    }
+    .contact-btn:hover { background: var(--gold); }
+
+    /* ─── BEDROOMS ────────────────────────────────── */
+    .section-white { background: var(--white); }
+    .bedroom-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;
+    }
+    .bedroom-card {
+      border: 1px solid var(--border); border-radius: 3px; overflow: hidden;
+    }
+    .bedroom-thumb {
+      aspect-ratio: 4/3; overflow: hidden;
+    }
+    .bedroom-thumb img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform .45s;
+    }
+    .bedroom-card:hover .bedroom-thumb img { transform: scale(1.05); }
+    .bedroom-body { padding: 22px 24px; }
+    .bedroom-body h3 {
+      font-family: 'Playfair Display', serif; font-size: 19px;
+      font-weight: 400; margin-bottom: 8px;
+    }
+    .bedroom-body p { font-size: 14px; color: var(--muted); line-height: 1.65; }
+    .bed-tag {
+      display: inline-block; margin-top: 14px;
+      background: var(--navy); color: #fff;
+      font-size: 11px; padding: 4px 12px; border-radius: 2px; letter-spacing: .05em;
+    }
+
+    /* ─── AMENITIES ───────────────────────────────── */
+    .amenity-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px;
+    }
+    .amenity-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 3px; padding: 22px 20px;
+      display: flex; gap: 16px; align-items: flex-start;
+    }
+    .amenity-icon { font-size: 22px; flex-shrink: 0; margin-top: 1px; }
+    .amenity-name { font-size: 14px; font-weight: 500; line-height: 1.3; }
+    .amenity-desc { font-size: 12px; color: var(--muted); margin-top: 3px; }
+
+    /* ─── PRICING ─────────────────────────────────── */
+    .section-navy { background: var(--navy); color: #fff; }
+    .section-navy .section-label { color: rgba(255,255,255,.45); }
+    .section-navy .section-title { color: #fff; }
+    .section-navy .rule { background: rgba(255,255,255,.25); }
+
+    /* Price summary tiles */
+    .price-tiles {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+      border: 1px solid rgba(255,255,255,.1); border-radius: 3px;
+      overflow: hidden; margin-bottom: 48px;
+    }
+    .price-tile {
+      padding: 26px 28px;
+      border-right: 1px solid rgba(255,255,255,.1);
+    }
+    .price-tile:last-child { border-right: none; }
+    .pt-val {
+      font-family: 'Playfair Display', serif; font-size: 30px;
+      color: #fff; line-height: 1;
+    }
+    .pt-val span { font-family: 'Inter', sans-serif; font-size: 15px; opacity: .55; }
+    .pt-key { font-size: 12px; color: rgba(255,255,255,.45); margin-top: 7px; letter-spacing: .04em; }
+
+    /* Calendar */
+    .cal-wrap {
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 3px; padding: 32px;
+    }
+    .cal-header {
+      display: flex; align-items: center;
+      justify-content: space-between; margin-bottom: 28px;
+    }
+    .cal-header-label {
+      font-size: 12px; font-weight: 500; letter-spacing: .12em;
+      text-transform: uppercase; color: rgba(255,255,255,.5);
+    }
+    .cal-btn {
+      background: none; border: 1px solid rgba(255,255,255,.2);
+      color: #fff; width: 34px; height: 34px; border-radius: 50%;
+      cursor: pointer; font-size: 18px; line-height: 1;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .2s;
+    }
+    .cal-btn:hover { background: rgba(255,255,255,.1); }
+    .cal-months { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; }
+    .cal-month-title {
+      font-family: 'Playfair Display', serif; font-size: 15px;
+      font-weight: 400; text-align: center; margin-bottom: 16px;
+    }
+    .cal-grid {
+      display: grid; grid-template-columns: repeat(7, 1fr);
+      gap: 2px; text-align: center;
+    }
+    .cal-dh {
+      font-size: 10px; font-weight: 600; letter-spacing: .06em;
+      color: rgba(255,255,255,.35); padding: 5px 0;
+    }
+    .cal-d {
+      padding: 7px 3px; border-radius: 3px;
+      cursor: pointer; font-size: 13px; line-height: 1;
+      transition: background .15s; user-select: none;
+    }
+    .cal-d:hover:not(.empty):not(.past) { background: rgba(255,255,255,.13); }
+    .cal-d.empty, .cal-d.past { cursor: default; color: rgba(255,255,255,.2); }
+    .cal-d.today { text-decoration: underline; font-weight: 600; }
+    .cal-d.ci    { background: var(--gold)!important; color: var(--navy)!important; font-weight: 700; border-radius: 3px 0 0 3px; }
+    .cal-d.co    { background: var(--gold)!important; color: var(--navy)!important; font-weight: 700; border-radius: 0 3px 3px 0; }
+    .cal-d.inr   { background: rgba(201,169,110,.22); border-radius: 0; }
+    .cal-hint {
+      margin-top: 20px; font-size: 12px; color: rgba(255,255,255,.35);
+      line-height: 1.7; text-align: center;
+    }
+
+    /* ─── BOOKING WIDGET (fixed) ──────────────────── */
+    .bw {
+      position: fixed; top: 90px; right: 48px; width: 340px; z-index: 150;
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 6px; box-shadow: 0 12px 40px rgba(0,0,0,.14);
+      padding: 24px;
+      opacity: 0; transform: translateY(-10px); pointer-events: none;
+      transition: opacity .3s, transform .3s;
+    }
+    .bw.visible { opacity: 1; transform: none; pointer-events: all; }
+
+    .bw-rate-row { display: flex; align-items: baseline; gap: 6px; margin-bottom: 3px; }
+    .bw-rate { font-family: 'Playfair Display', serif; font-size: 24px; }
+    .bw-per  { font-size: 14px; color: var(--muted); }
+    .bw-disc-note { font-size: 11px; color: var(--gold); margin-bottom: 18px; font-weight: 500; }
+
+    .bw-fields {
+      border: 1px solid var(--border); border-radius: 3px;
+      overflow: hidden; margin-bottom: 12px;
+    }
+    .bw-date-row { display: grid; grid-template-columns: 1fr 1fr; }
+    .bw-field {
+      padding: 10px 12px;
+      border-right: 1px solid var(--border);
+    }
+    .bw-field:last-of-type { border-right: none; }
+    .bw-field-full { border-top: 1px solid var(--border); border-right: none; }
+    .bw-field label {
+      display: block; font-size: 9px; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 3px;
+    }
+    .bw-field input, .bw-field select {
+      border: none; outline: none; font-family: 'Inter', sans-serif;
+      font-size: 14px; color: var(--text); background: transparent;
+      width: 100%; cursor: pointer; padding: 0;
+      -webkit-appearance: none; appearance: none;
+    }
+    .bw-field select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23686868'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 4px center; padding-right: 16px; }
+
+    .bw-breakdown { margin-bottom: 16px; }
+    .bw-line {
+      display: flex; justify-content: space-between;
+      font-size: 13px; padding: 5px 0; color: var(--muted);
+    }
+    .bw-line.saving { color: #5a9e78; }
+    .bw-line.total  {
+      color: var(--text); font-weight: 600; font-size: 15px;
+      border-top: 1px solid var(--border);
+      padding-top: 10px; margin-top: 6px;
+    }
+
+    .bw-cta {
+      display: block; width: 100%; padding: 14px;
+      background: var(--navy); color: #fff;
+      text-align: center; border: none; border-radius: 3px;
+      font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600;
+      letter-spacing: .06em; text-transform: uppercase;
+      cursor: pointer; transition: background .2s;
+    }
+    .bw-cta:hover:not(.inactive) { background: var(--gold); color: var(--navy); }
+    .bw-cta.inactive {
+      background: #e8e4dc; color: #aaa; cursor: default;
+    }
+    .bw-min-note {
+      text-align: center; font-size: 11px; color: var(--muted);
+      margin-top: 10px; line-height: 1.5;
+    }
+
+    /* ─── MOBILE BAR ──────────────────────────────── */
+    .mobile-bar {
+      display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 150;
+      background: var(--white); border-top: 1px solid var(--border);
+      padding: 14px 24px; align-items: center; justify-content: space-between;
+      box-shadow: 0 -4px 20px rgba(0,0,0,.09);
+    }
+    .mb-price {
+      font-family: 'Playfair Display', serif; font-size: 22px; line-height: 1;
+    }
+    .mb-price small {
+      font-family: 'Inter', sans-serif; font-size: 13px;
+      color: var(--muted); font-weight: 400;
+    }
+    .mb-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .mb-btn {
+      background: var(--navy); color: #fff; text-decoration: none;
+      padding: 13px 22px; border-radius: 3px;
+      font-size: 12px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase;
+      transition: background .2s;
+    }
+    .mb-btn:hover { background: var(--gold); color: var(--navy); }
+
+    /* ─── FLOORPLAN ───────────────────────────────── */
+    .fp-row { display: flex; align-items: center; gap: 48px; }
+    .fp-text { max-width: 500px; }
+    .fp-text p { color: var(--muted); font-size: 17px; line-height: 1.8; margin-bottom: 32px; }
+    .fp-link {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--navy); color: #fff;
+      padding: 14px 30px; border-radius: 2px; text-decoration: none;
+      font-size: 13px; font-weight: 600; letter-spacing: .08em;
+      text-transform: uppercase; transition: background .2s;
+    }
+    .fp-link:hover { background: var(--gold); color: var(--navy); }
+
+    /* ─── INQUIRY FORM ────────────────────────────── */
+    .inquiry-inner { max-width: 700px; margin: 0 auto; text-align: center; }
+    .inquiry-inner > p { color: var(--muted); font-size: 17px; margin-bottom: 0; }
+    .form-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 16px; margin-top: 44px; text-align: left;
+    }
+    .fg { display: flex; flex-direction: column; gap: 6px; }
+    .fg.full { grid-column: span 2; }
+    .fg label {
+      font-size: 11px; font-weight: 600; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--muted);
+    }
+    .fg input, .fg textarea, .fg select {
+      padding: 12px 16px;
+      border: 1px solid var(--border); border-radius: 2px;
+      font-family: 'Inter', sans-serif; font-size: 15px;
+      background: var(--white); color: var(--text);
+      outline: none; transition: border-color .2s;
+      -webkit-appearance: none; appearance: none;
+    }
+    .fg input:focus, .fg textarea:focus, .fg select:focus {
+      border-color: var(--navy);
+    }
+    .fg textarea { resize: vertical; min-height: 120px; }
+    .submit-btn {
+      width: 100%; padding: 16px;
+      background: var(--navy); color: #fff; border: none;
+      font-family: 'Inter', sans-serif; font-size: 12px;
+      font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+      cursor: pointer; border-radius: 2px; margin-top: 8px;
+      transition: background .2s;
+    }
+    .submit-btn:hover { background: var(--gold); color: var(--navy); }
+
+    /* ─── FOOTER ──────────────────────────────────── */
+    footer {
+      background: var(--navy); color: rgba(255,255,255,.45);
+      text-align: center; padding: 44px 52px; font-size: 13px;
+    }
+    footer .footer-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px; color: rgba(255,255,255,.75); margin-bottom: 8px;
+    }
+    footer a { color: rgba(255,255,255,.45); text-decoration: none; }
+    footer a:hover { color: #fff; }
+    .footer-divider {
+      width: 36px; height: 1px; background: rgba(255,255,255,.2);
+      margin: 20px auto;
+    }
+
+    /* ─── LIGHTBOX ────────────────────────────────── */
+    #lightbox {
+      display: none; position: fixed; inset: 0; z-index: 1000;
+      background: rgba(0,0,0,.92);
+      align-items: center; justify-content: center;
+    }
+    #lightbox.open { display: flex; }
+    #lb-img {
+      max-width: 90vw; max-height: 90vh;
+      object-fit: contain; border-radius: 2px;
+    }
+    .lb-close {
+      position: absolute; top: 20px; right: 28px;
+      color: #fff; font-size: 38px; cursor: pointer;
+      opacity: .6; line-height: 1; transition: opacity .2s;
+    }
+    .lb-close:hover { opacity: 1; }
+    .lb-arrow {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      color: #fff; font-size: 42px; cursor: pointer;
+      opacity: .5; padding: 20px; user-select: none;
+      transition: opacity .2s;
+    }
+    .lb-arrow:hover { opacity: 1; }
+    #lb-prev { left: 10px; }
+    #lb-next { right: 10px; }
+    #lb-caption {
+      position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%);
+      color: rgba(255,255,255,.5); font-size: 13px; white-space: nowrap;
+    }
+
+    /* ─── RESPONSIVE ──────────────────────────────── */
+    @media (max-width: 960px) {
+      nav { padding: 16px 24px; }
+      .hero-content { left: 24px; right: 24px; bottom: 56px; }
+      .section { padding: 64px 24px; }
+      .stats-bar { padding: 0 24px; flex-wrap: wrap; }
+      .stat { padding: 20px 20px 20px 0; margin-right: 20px; }
+      .overview-grid { grid-template-columns: 1fr; }
+      .facts-card { position: static; }
+      .bedroom-grid { grid-template-columns: 1fr; }
+      .amenity-grid { grid-template-columns: repeat(2, 1fr); }
+      .price-tiles { grid-template-columns: repeat(2, 1fr); }
+      .cal-months { grid-template-columns: 1fr; }
+      .form-grid { grid-template-columns: 1fr; }
+      .fg.full { grid-column: span 1; }
+      .fp-row { flex-direction: column; align-items: flex-start; gap: 0; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .gi-1,.gi-2,.gi-3,.gi-4,.gi-5,.gi-6,.gi-7 {
+        grid-column: span 1; grid-row: span 1; aspect-ratio: 4/3; height: auto;
+      }
+      .gallery-grid { grid-template-rows: none; }
+      .bw { display: none; }
+      .mobile-bar { display: flex; }
+      body { padding-bottom: 80px; }
+    }
+    @media (max-width: 560px) {
+      .hero-title { font-size: 38px; }
+      .amenity-grid { grid-template-columns: 1fr; }
+      .price-tiles { grid-template-columns: 1fr; }
+      .stats-bar { flex-direction: column; align-items: flex-start; }
+      .stat { border-right: none; border-bottom: 1px solid rgba(255,255,255,.08); width: 100%; margin-right: 0; }
+      .stat:last-child { border-bottom: none; }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .gi-1,.gi-2,.gi-3,.gi-4,.gi-5,.gi-6,.gi-7 { aspect-ratio: 16/10; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- BOOKING WIDGET -->
+<div class="bw" id="bw">
+  <div class="bw-rate-row">
+    <span class="bw-rate">$550</span>
+    <span class="bw-per">/ night</span>
+  </div>
+  <div class="bw-disc-note">✦ 15% discount for 31+ night stays</div>
+
+  <div class="bw-fields">
+    <div class="bw-date-row">
+      <div class="bw-field">
+        <label>Check-in</label>
+        <input type="date" id="bw-ci">
+      </div>
+      <div class="bw-field" style="border-right:none">
+        <label>Check-out</label>
+        <input type="date" id="bw-co">
+      </div>
+    </div>
+    <div class="bw-field bw-field-full">
+      <label>Guests</label>
+      <select id="bw-guests">
+        <option>1 Guest</option>
+        <option>2 Guests</option>
+        <option>3 Guests</option>
+        <option>4 Guests</option>
+        <option>5 Guests</option>
+        <option selected>6 Guests</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="bw-breakdown" id="bw-breakdown" style="display:none">
+    <div class="bw-line" id="bw-l-base"></div>
+    <div class="bw-line saving" id="bw-l-disc"></div>
+    <div class="bw-line" id="bw-l-clean"></div>
+    <div class="bw-line" id="bw-l-tax"></div>
+    <div class="bw-line total" id="bw-l-total"></div>
+  </div>
+
+  <button class="bw-cta inactive" id="bw-cta">Select dates to continue</button>
+  <p class="bw-min-note">31-night minimum · You won't be charged yet</p>
+</div>
+
+<!-- MOBILE BAR -->
+<div class="mobile-bar">
+  <div>
+    <div class="mb-price">$550 <small>/ night</small></div>
+    <div class="mb-sub">31-night min · 15% monthly discount</div>
+  </div>
+  <a href="#inquiry" class="mb-btn">Check Availability</a>
+</div>
+
+<!-- LIGHTBOX -->
+<div id="lightbox">
+  <span class="lb-close" id="lb-close">&times;</span>
+  <span class="lb-arrow" id="lb-prev">&#8249;</span>
+  <img id="lb-img" src="" alt="">
+  <span class="lb-arrow" id="lb-next">&#8250;</span>
+  <div id="lb-caption"></div>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">The Sackett House</a>
+  <a href="#inquiry" class="nav-cta">Request to Book</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <img src="708 Front Night.jpg" alt="The Sackett House — exterior at night" loading="eager">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Park Slope · Brooklyn, New York</p>
+    <h1 class="hero-title">The Sackett<br>House</h1>
+    <div class="hero-chips">
+      <span class="chip">3 Bedrooms</span>
+      <span class="chip">2 Bathrooms</span>
+      <span class="chip">Up to 6 Guests</span>
+      <span class="chip">31-Night Minimum</span>
+      <span class="chip">Gigabit Fios WiFi</span>
+      <span class="chip">Dual-Zone HVAC</span>
+    </div>
+  </div>
+</div>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat">
+    <span class="stat-icon">🛏</span>
+    <div><div class="stat-val">3</div><div class="stat-key">Bedrooms</div></div>
+  </div>
+  <div class="stat">
+    <span class="stat-icon">🚿</span>
+    <div><div class="stat-val">2</div><div class="stat-key">Bathrooms</div></div>
+  </div>
+  <div class="stat">
+    <span class="stat-icon">👥</span>
+    <div><div class="stat-val">6 Guests</div><div class="stat-key">Maximum</div></div>
+  </div>
+  <div class="stat">
+    <span class="stat-icon">🪜</span>
+    <div><div class="stat-val">3rd Floor</div><div class="stat-key">Walkup · No Elevator</div></div>
+  </div>
+  <div class="stat">
+    <span class="stat-icon">🌡️</span>
+    <div><div class="stat-val">Dual-Zone</div><div class="stat-key">HVAC · Suite has own zone</div></div>
+  </div>
+  <div class="stat">
+    <span class="stat-icon">⚡</span>
+    <div><div class="stat-val">Gigabit</div><div class="stat-key">Fios Fiber WiFi</div></div>
+  </div>
+</div>
+
+<!-- GALLERY -->
+<div class="gallery-grid" id="gallery">
+  <div class="gi gi-1" data-li="0"><img src="708 Front Night.jpg" alt="Exterior — night" loading="lazy"></div>
+  <div class="gi gi-2" data-li="1"><img src="IMG_6932.jpeg" alt="Living room" loading="lazy"></div>
+  <div class="gi gi-3" data-li="2"><img src="IMG_6923.jpeg" alt="Skylight bedroom" loading="lazy"></div>
+  <div class="gi gi-4" data-li="5"><img src="IMG_6925.jpeg" alt="Twin bedroom" loading="lazy"></div>
+  <div class="gi gi-5" data-li="7"><img src="IMG_6929.jpeg" alt="Primary suite" loading="lazy"></div>
+  <div class="gi gi-6 gi-fp" onclick="window.open('708a Floorplan.pdf','_blank')">
+    <embed src="708a Floorplan.pdf#page=1&toolbar=0&navpanes=0&scrollbar=0&view=FitH" type="application/pdf">
+    <div class="gi-fp-label">
+      <span>📐</span>
+      <span>Floor Plan</span>
+    </div>
+  </div>
+  <div class="gi gi-7" data-li="9">
+    <img src="IMG_6931.jpeg" alt="Bathroom — diamond tile" loading="lazy">
+    <div class="gi-more-overlay">
+      <span>+4</span>
+      <span>VIEW ALL</span>
+    </div>
+  </div>
+</div>
+
+<!-- OVERVIEW -->
+<section class="section">
+  <div class="inner overview-grid">
+    <div class="overview-text">
+      <p class="section-label">The Space</p>
+      <h2 class="section-title">A sun-filled retreat in the heart<br>of Park Slope</h2>
+      <div class="rule"></div>
+      <p>Welcome to The Sackett House — a beautifully renovated 3-bedroom, 2-bathroom home set within a stunning brick townhouse on one of Park Slope's most charming residential blocks. The apartment occupies a private floor of the building, offering an uncommon sense of calm, light, and quality in the heart of Brooklyn.</p>
+      <p>Every room has been designed with care: statement bathrooms with custom tile work, warm wide-plank hardwood floors throughout, and sun flooding in from multiple exposures. The dual-zone HVAC keeps the whole home comfortable year-round — with the primary suite on its own independent climate control for a truly personalized stay.</p>
+      <p>Connectivity is first-class: <strong>Gigabit Fios fiber</strong> makes this an ideal base for remote workers, relocating professionals, or anyone who needs their home office to perform flawlessly. A dedicated desk in the primary suite adds to the work-from-home setup. Entry is effortless via <strong>keypad and smartphone</strong> — no keys to manage.</p>
+      <p>Please note: this is a <strong>3rd floor walkup with no elevator</strong>. The home is perfectly suited for guests comfortable with stairs.</p>
+      <p>Park Slope is one of Brooklyn's most beloved neighborhoods — tree-lined streets, boutique restaurants, the Brooklyn Public Library, and Prospect Park just around the corner. The <strong>R train at 4th Avenue</strong> is a 5-minute walk, and <strong>Atlantic Terminal</strong> (A/C/G/2/3/4/5/B/D/N/Q/R) is about 15 minutes — putting all of Manhattan within easy reach.</p>
+    </div>
+    <div>
+      <div class="facts-card">
+        <h3>At a Glance</h3>
+        <div class="fact"><span class="fact-k">Address</span><span class="fact-v">708A Sackett St, Brooklyn</span></div>
+        <div class="fact"><span class="fact-k">Neighborhood</span><span class="fact-v">Park Slope</span></div>
+        <div class="fact"><span class="fact-k">Bedrooms</span><span class="fact-v">3</span></div>
+        <div class="fact"><span class="fact-k">Bathrooms</span><span class="fact-v">2</span></div>
+        <div class="fact"><span class="fact-k">Max Guests</span><span class="fact-v">6</span></div>
+        <div class="fact"><span class="fact-k">Minimum Stay</span><span class="fact-v">31 Nights</span></div>
+        <div class="fact"><span class="fact-k">Pets</span><span class="fact-v">Not allowed</span></div>
+        <div class="fact"><span class="fact-k">Check-in</span><span class="fact-v">4:00 PM</span></div>
+        <div class="fact"><span class="fact-k">Check-out</span><span class="fact-v">11:00 AM</span></div>
+        <div class="fact"><span class="fact-k">Building</span><span class="fact-v">3rd Floor · No Elevator</span></div>
+        <div class="fact"><span class="fact-k">WiFi</span><span class="fact-v">Gigabit Fios Fiber</span></div>
+        <div class="fact"><span class="fact-k">Climate</span><span class="fact-v">Dual-Zone HVAC</span></div>
+        <div class="fact"><span class="fact-k">Subway</span><span class="fact-v">R at 4th Ave (~5 min)<br><span style="font-weight:400;color:var(--muted)">All lines at Atlantic (~15 min)</span></span></div>
+        <div class="fact"><span class="fact-k">Contact</span><span class="fact-v"><a href="mailto:708sackett@gmail.com" class="contact-btn">Send a Message</a></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BEDROOMS -->
+<section class="section section-white">
+  <div class="inner">
+    <p class="section-label">Sleeping Arrangements</p>
+    <h2 class="section-title">Three distinct, thoughtfully furnished bedrooms</h2>
+    <div class="rule"></div>
+    <div class="bedroom-grid">
+
+      <div class="bedroom-card">
+        <div class="bedroom-thumb">
+          <img src="IMG_6929.jpeg" alt="Primary Suite" loading="lazy">
+        </div>
+        <div class="bedroom-body">
+          <h3>Primary Suite</h3>
+          <p>A spacious king bedroom with a dedicated work desk — ideal for remote work or a longer stay. Light blue-grey walls, wall-mounted TV, wood-tone furniture, and bright street-facing window light. The primary suite has its own independent HVAC zone — set your temperature without affecting the rest of the home.</p>
+          <span class="bed-tag">King · Own HVAC Zone · Desk · TV</span>
+        </div>
+      </div>
+
+      <div class="bedroom-card">
+        <div class="bedroom-thumb">
+          <img src="IMG_6926.jpeg" alt="Twin Bedroom" loading="lazy">
+        </div>
+        <div class="bedroom-body">
+          <h3>Twin Bedroom</h3>
+          <p>Two twin beds in a calming sage-green room with street-facing natural light and wide-plank hardwood floors. Ideal for two guests who prefer their own space, or as a private single room. Wall-mounted TV and wardrobe included.</p>
+          <span class="bed-tag">2 Twin Beds · TV · Hardwood Floors</span>
+        </div>
+      </div>
+
+      <div class="bedroom-card">
+        <div class="bedroom-thumb">
+          <img src="IMG_6923.jpeg" alt="Skylight Bedroom" loading="lazy">
+        </div>
+        <div class="bedroom-body">
+          <h3>Skylight Bedroom</h3>
+          <p>A dramatic skylight floods this slate-blue room with natural light throughout the day. Queen bed, framed artwork, wall-mounted TV, and dark nightstands — a serene and characterful room unlike any other.</p>
+          <span class="bed-tag">Queen · Skylight · TV</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- AMENITIES -->
+<section class="section">
+  <div class="inner">
+    <p class="section-label">Amenities</p>
+    <h2 class="section-title">Everything you need for a long stay</h2>
+    <div class="rule"></div>
+    <div class="amenity-grid">
+      <div class="amenity-card">
+        <span class="amenity-icon">⚡</span>
+        <div><div class="amenity-name">Gigabit Fios WiFi</div><div class="amenity-desc">1 Gbps fiber — ideal for remote work, video calls &amp; streaming</div></div>
+      </div>
+      <div class="amenity-card">
+        <span class="amenity-icon">🌡️</span>
+        <div><div class="amenity-name">Dual-Zone HVAC</div><div class="amenity-desc">Full-home climate control, primary suite on its own independent zone</div></div>
+      </div>
+      <div class="amenity-card">
+        <span class="amenity-icon">📺</span>
+        <div><div class="amenity-name">Smart TVs Throughout</div><div class="amenity-desc">Wall-mounted in every bedroom and the living room</div></div>
+      </div>
+      <div class="amenity-card">
+        <span class="amenity-icon">☀️</span>
+        <div><div class="amenity-name">Sun-Filled Rooms</div><div class="amenity-desc">Multiple exposures — bright and airy throughout the day</div></div>
+      </div>
+      <div class="amenity-card">
+        <span class="amenity-icon">🔇</span>
+        <div><div class="amenity-name">Quiet Setting</div><div class="amenity-desc">Residential block with low traffic — peaceful nights guaranteed</div></div>
+      </div>
+      <div class="amenity-card">
+        <span class="amenity-icon">🪵</span>
+        <div><div class="amenity-name">Hardwood Floors</div><div class="amenity-desc">Wide-plank hardwood throughout all rooms</div></div>
+      </div>
+      <div class="amenity-card">
+        <span class="amenity-icon">🛁</span>
+        <div><div class="amenity-name">2 Designer Bathrooms</div><div class="amenity-desc">Herringbone tile with glass shower; diamond tile with tub &amp; shower</div></div>
+      </div>
+      <div class="amenity-card">
+        <span class="amenity-icon">💼</span>
+        <div><div class="amenity-name">Dedicated Workspace</div><div class="amenity-desc">Desk in third bedroom — work from home in comfort</div></div>
+      </div>
+      <div class="amenity-card">
+        <span class="amenity-icon">🔐</span>
+        <div><div class="amenity-name">Keypad &amp; Smartphone Entry</div><div class="amenity-desc">Self check-in via keypad or smartphone app — no keys needed</div></div>
+      </div>
+      <div class="amenity-card">
+        <span class="amenity-icon">🚇</span>
+        <div><div class="amenity-name">Excellent Transit</div><div class="amenity-desc">R train at 4th Ave (~5 min) · All lines at Atlantic Terminal (~15 min)</div></div>
+      </div>
+      <div class="amenity-card">
+        <span class="amenity-icon">🌿</span>
+        <div><div class="amenity-name">Prospect Park</div><div class="amenity-desc">Brooklyn's beloved 585-acre park — a short walk from the front door</div></div>
+      </div>
+      <div class="amenity-card">
+        <span class="amenity-icon">🪜</span>
+        <div><div class="amenity-name">3rd Floor Walkup</div><div class="amenity-desc">Please note: no elevator. Stairs required to access the apartment</div></div>
+      </div>
+      <div class="amenity-card">
+        <span class="amenity-icon">🧱</span>
+        <div><div class="amenity-name">Historic Brownstone</div><div class="amenity-desc">Classic Park Slope brick exterior with modern interior renovation</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING & CALENDAR -->
+<section class="section section-navy" id="pricing">
+  <div class="inner">
+    <p class="section-label">Rates &amp; Availability</p>
+    <h2 class="section-title">Transparent pricing,<br>no surprises</h2>
+    <div class="rule"></div>
+
+    <div class="price-tiles">
+      <div class="price-tile">
+        <div class="pt-val">$550<span>/night</span></div>
+        <div class="pt-key">Base nightly rate</div>
+      </div>
+      <div class="price-tile">
+        <div class="pt-val">15%<span> off</span></div>
+        <div class="pt-key">Monthly discount (31+ nights)</div>
+      </div>
+      <div class="price-tile">
+        <div class="pt-val">$350</div>
+        <div class="pt-key">One-time cleaning fee</div>
+      </div>
+      <div class="price-tile">
+        <div class="pt-val">31<span> nights</span></div>
+        <div class="pt-key">Minimum stay required</div>
+      </div>
+    </div>
+
+    <div class="cal-wrap">
+      <div class="cal-header">
+        <button class="cal-btn" id="cal-prev">&#8249;</button>
+        <span class="cal-header-label">Select your dates</span>
+        <button class="cal-btn" id="cal-next">&#8250;</button>
+      </div>
+      <div class="cal-months" id="cal-months"></div>
+    </div>
+    <p class="cal-hint">
+      Click a check-in date, then a check-out date (31-night minimum).<br>
+      Dates sync with the booking panel — prices update automatically.
+    </p>
+  </div>
+</section>
+
+<!-- FLOOR PLAN -->
+<section class="section section-white">
+  <div class="inner">
+    <div class="fp-row">
+      <div class="fp-text">
+        <p class="section-label">Layout</p>
+        <h2 class="section-title">Floor Plan</h2>
+        <div class="rule"></div>
+        <p>View the full floor plan to understand the layout, room positions, and flow of the space. Knowing the layout before you arrive makes settling in effortless.</p>
+        <a href="708a Floorplan.pdf" target="_blank" class="fp-link">
+          <span>↗</span> View Floor Plan (PDF)
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INQUIRY -->
+<section class="section" id="inquiry">
+  <div class="inner">
+    <div class="inquiry-inner">
+      <p class="section-label" style="text-align:center">Book Your Stay</p>
+      <h2 class="section-title" style="text-align:center">Request to Book</h2>
+      <div class="rule" style="margin:0 auto 28px"></div>
+      <p>Send us your details and we'll confirm availability and next steps within 24 hours. All stays subject to a 31-night minimum.</p>
+
+      <form class="form-grid" id="inquiry-form">
+        <div class="fg">
+          <label>First Name</label>
+          <input type="text" name="firstName" placeholder="Jane" required>
+        </div>
+        <div class="fg">
+          <label>Last Name</label>
+          <input type="text" name="lastName" placeholder="Smith" required>
+        </div>
+        <div class="fg">
+          <label>Email Address</label>
+          <input type="email" name="email" placeholder="jane@email.com" required>
+        </div>
+        <div class="fg">
+          <label>Phone Number</label>
+          <input type="tel" name="phone" placeholder="+1 (555) 000-0000">
+        </div>
+        <div class="fg">
+          <label>Desired Check-in</label>
+          <input type="date" name="checkin" id="form-checkin">
+        </div>
+        <div class="fg">
+          <label>Desired Check-out</label>
+          <input type="date" name="checkout" id="form-checkout">
+        </div>
+        <div class="fg">
+          <label>Number of Guests</label>
+          <select name="guests">
+            <option>1 Guest</option>
+            <option>2 Guests</option>
+            <option>3 Guests</option>
+            <option>4 Guests</option>
+            <option>5 Guests</option>
+            <option selected>6 Guests</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>How did you hear about us?</label>
+          <select name="source">
+            <option value="">Select one</option>
+            <option>Google search</option>
+            <option>Referral / word of mouth</option>
+            <option>Social media</option>
+            <option>Relocation agent</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="fg full">
+          <label>Tell us about your stay</label>
+          <textarea name="message" placeholder="Purpose of visit, any questions, specific needs..."></textarea>
+        </div>
+        <div class="fg full">
+          <button type="submit" class="submit-btn">Send Booking Inquiry →</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-title">The Sackett House</div>
+  <p>708A Sackett Street · Park Slope, Brooklyn, NY</p>
+  <div class="footer-divider"></div>
+  <p><a href="mailto:708sackett@gmail.com" class="contact-btn" style="display:inline-block;margin-top:4px">Send a Message</a></p>
+  <p style="margin-top:20px;font-size:11px;opacity:.4">&copy; 2025 The Sackett House. All rights reserved.</p>
+</footer>
+
+<script>
+/* ─── CONSTANTS ──────────────────────────────────── */
+const NIGHTLY  = 550;
+const CLEANING = 350;
+const DISCOUNT = 0.15;
+const TAX_RATE = 0.1475;
+const MIN_STAY = 31;
+function fmt(n) { return '$' + Math.round(n).toLocaleString(); }
+function toDateStr(d) { return d.toISOString().split('T')[0]; }
+
+/* ─── NAV SCROLL ─────────────────────────────────── */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', onScroll, { passive: true });
+
+/* ─── BOOKING WIDGET ─────────────────────────────── */
+const bw      = document.getElementById('bw');
+const bwCi    = document.getElementById('bw-ci');
+const bwCo    = document.getElementById('bw-co');
+const bwCta   = document.getElementById('bw-cta');
+const bwBreak = document.getElementById('bw-breakdown');
+
+// Set min date to today
+const todayStr = toDateStr(new Date());
+bwCi.min = todayStr;
+bwCo.min = todayStr;
+
+function onScroll() {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+  const footerTop = document.querySelector('footer').getBoundingClientRect().top;
+  bw.classList.toggle('visible', footerTop > window.innerHeight * 0.5);
+}
+bw.classList.add('visible');
+
+function calcFromWidget() {
+  const ciVal = bwCi.value;
+  const coVal = bwCo.value;
+
+  if (!ciVal || !coVal) {
+    bwBreak.style.display = 'none';
+    bwCta.className = 'bw-cta inactive';
+    bwCta.textContent = 'Select dates to continue';
+    return;
+  }
+
+  const ci     = new Date(ciVal);
+  const co     = new Date(coVal);
+  const nights = Math.round((co - ci) / 86400000);
+
+  if (nights < MIN_STAY) {
+    bwBreak.style.display = 'none';
+    bwCta.className = 'bw-cta inactive';
+    bwCta.textContent = `Minimum stay is ${MIN_STAY} nights`;
+    return;
+  }
+
+  const base      = nights * NIGHTLY;
+  const disc      = base * DISCOUNT;
+  const after     = base - disc;
+  const withClean = after + CLEANING;
+  const tax       = withClean * TAX_RATE;
+  const total     = withClean + tax;
+
+  document.getElementById('bw-l-base').innerHTML  = `<span>$${NIGHTLY} × ${nights} nights</span><span>${fmt(base)}</span>`;
+  document.getElementById('bw-l-disc').innerHTML  = `<span>Monthly discount (15%)</span><span>−${fmt(disc)}</span>`;
+  document.getElementById('bw-l-clean').innerHTML = `<span>Cleaning fee</span><span>${fmt(CLEANING)}</span>`;
+  document.getElementById('bw-l-tax').innerHTML   = `<span>Taxes & fees</span><span>${fmt(tax)}</span>`;
+  document.getElementById('bw-l-total').innerHTML = `<span>Est. Total (${nights} nights)</span><span>${fmt(total)}</span>`;
+
+  bwBreak.style.display = 'block';
+  bwCta.className = 'bw-cta';
+  bwCta.textContent = 'Request to Book →';
+
+  // Sync to calendar
+  checkIn  = new Date(ciVal);
+  checkOut = new Date(coVal);
+  renderCal();
+
+  // Sync to inquiry form
+  document.getElementById('form-checkin').value  = ciVal;
+  document.getElementById('form-checkout').value = coVal;
+}
+
+bwCi.addEventListener('change', () => {
+  if (bwCi.value) {
+    const minCo = new Date(bwCi.value);
+    minCo.setDate(minCo.getDate() + MIN_STAY);
+    bwCo.min = toDateStr(minCo);
+    if (bwCo.value && new Date(bwCo.value) < minCo) bwCo.value = bwCo.min;
+  }
+  calcFromWidget();
+});
+bwCo.addEventListener('change', calcFromWidget);
+
+bwCta.addEventListener('click', () => {
+  if (bwCta.classList.contains('inactive')) return;
+  document.getElementById('form-checkin').value  = bwCi.value;
+  document.getElementById('form-checkout').value = bwCo.value;
+  document.getElementById('inquiry').scrollIntoView({ behavior: 'smooth' });
+});
+
+/* ─── CALENDAR ───────────────────────────────────── */
+let calOffset = 0;
+let checkIn   = null;
+let checkOut  = null;
+
+function renderCal() {
+  const container = document.getElementById('cal-months');
+  container.innerHTML = '';
+  const today = new Date(); today.setHours(0,0,0,0);
+
+  for (let m = 0; m < 2; m++) {
+    const ref   = new Date(today.getFullYear(), today.getMonth() + calOffset + m, 1);
+    const yr    = ref.getFullYear();
+    const mo    = ref.getMonth();
+    const title = ref.toLocaleString('default', { month: 'long', year: 'numeric' });
+    const first = new Date(yr, mo, 1).getDay();
+    const days  = new Date(yr, mo + 1, 0).getDate();
+
+    let html = `<div><div class="cal-month-title">${title}</div><div class="cal-grid">`;
+    ['Su','Mo','Tu','We','Th','Fr','Sa'].forEach(d => { html += `<div class="cal-dh">${d}</div>`; });
+    for (let e = 0; e < first; e++) html += `<div class="cal-d empty"></div>`;
+
+    for (let d = 1; d <= days; d++) {
+      const date  = new Date(yr, mo, d);
+      const past  = date < today;
+      const isCI  = checkIn  && date.getTime() === checkIn.getTime();
+      const isCO  = checkOut && date.getTime() === checkOut.getTime();
+      const inRng = checkIn && checkOut && date > checkIn && date < checkOut;
+      let cls = 'cal-d';
+      if (past)       cls += ' past';
+      if (date.getTime() === today.getTime()) cls += ' today';
+      if (isCI)       cls += ' ci';
+      else if (isCO)  cls += ' co';
+      else if (inRng) cls += ' inr';
+      html += `<div class="${cls}" data-d="${toDateStr(date)}">${d}</div>`;
+    }
+    html += `</div></div>`;
+    container.insertAdjacentHTML('beforeend', html);
+  }
+
+  container.querySelectorAll('.cal-d:not(.empty):not(.past)').forEach(el => {
+    el.addEventListener('click', () => {
+      const d = new Date(el.dataset.d);
+      if (!checkIn || (checkIn && checkOut)) {
+        checkIn = d; checkOut = null;
+      } else if (d > checkIn) {
+        const diff = Math.round((d - checkIn) / 86400000);
+        if (diff >= MIN_STAY) {
+          checkOut = d;
+          // Sync back to widget
+          bwCi.value = toDateStr(checkIn);
+          bwCo.value = toDateStr(checkOut);
+          calcFromWidget();
+        } else {
+          checkIn = d; checkOut = null;
+        }
+      } else {
+        checkIn = d; checkOut = null;
+      }
+      renderCal();
+    });
+  });
+}
+
+document.getElementById('cal-prev').onclick = () => { if (calOffset > 0) { calOffset--; renderCal(); } };
+document.getElementById('cal-next').onclick = () => { calOffset++; renderCal(); };
+renderCal();
+
+/* ─── LIGHTBOX ───────────────────────────────────── */
+const allImages = [
+  { src: '708 Front Night.jpg',  cap: 'Exterior — Evening' },
+  { src: 'IMG_6932.jpeg',        cap: 'Living Room' },
+  { src: 'IMG_6923.jpeg',        cap: 'Skylight Bedroom' },
+  { src: 'IMG_6922.jpeg',        cap: 'Skylight Bedroom' },
+  { src: 'IMG_6924.jpeg',        cap: 'Skylight Bedroom' },
+  { src: 'IMG_6925.jpeg',        cap: 'Twin Bedroom' },
+  { src: 'IMG_6926.jpeg',        cap: 'Twin Bedroom' },
+  { src: 'IMG_6929.jpeg',        cap: 'Primary Suite' },
+  { src: 'IMG_6930.jpeg',        cap: 'Bathroom — Herringbone Tile' },
+  { src: 'IMG_6931.jpeg',        cap: 'Bathroom — Diamond Tile' },
+  { src: 'DLY_6311_3copy2.JPG',  cap: 'Staircase' },
+  { src: '708 Front Day.jpg',    cap: 'Exterior — Day' },
+];
+
+let lbIdx = 0;
+const lb    = document.getElementById('lightbox');
+const lbImg = document.getElementById('lb-img');
+const lbCap = document.getElementById('lb-caption');
+
+function lbOpen(i) {
+  lbIdx = (i + allImages.length) % allImages.length;
+  lbImg.src = allImages[lbIdx].src;
+  lbCap.textContent = `${lbIdx + 1} / ${allImages.length}  —  ${allImages[lbIdx].cap}`;
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function lbClose() { lb.classList.remove('open'); document.body.style.overflow = ''; }
+
+document.getElementById('lb-close').onclick = lbClose;
+lb.addEventListener('click', e => { if (e.target === lb) lbClose(); });
+document.getElementById('lb-prev').onclick = e => { e.stopPropagation(); lbOpen(lbIdx - 1); };
+document.getElementById('lb-next').onclick = e => { e.stopPropagation(); lbOpen(lbIdx + 1); };
+document.addEventListener('keydown', e => {
+  if (!lb.classList.contains('open')) return;
+  if (e.key === 'ArrowLeft')  lbOpen(lbIdx - 1);
+  if (e.key === 'ArrowRight') lbOpen(lbIdx + 1);
+  if (e.key === 'Escape')     lbClose();
+});
+document.querySelectorAll('.gi:not(.gi-fp)').forEach(el => {
+  el.addEventListener('click', () => lbOpen(+el.dataset.li));
+});
+
+/* ─── INQUIRY FORM ───────────────────────────────── */
+document.getElementById('inquiry-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const fd  = new FormData(this);
+  const get = k => fd.get(k) || '';
+  const subj = encodeURIComponent(
+    `Booking Inquiry — ${get('firstName')} ${get('lastName')} · ${get('checkin')} to ${get('checkout')}`
+  );
+  const body = encodeURIComponent(
+`Hi,
+
+I'd like to inquire about booking The Sackett House.
+
+Name:      ${get('firstName')} ${get('lastName')}
+Email:     ${get('email')}
+Phone:     ${get('phone') || 'Not provided'}
+Check-in:  ${get('checkin')}
+Check-out: ${get('checkout')}
+Guests:    ${get('guests')}
+Source:    ${get('source') || 'Not specified'}
+
+Message:
+${get('message') || 'No additional message.'}
+
+Thank you!`
+  );
+  window.open(`mailto:708sackett@gmail.com?subject=${subj}&body=${body}`, '_self');
+});
+</script>
+
+</body>
+</html>
